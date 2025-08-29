@@ -1,0 +1,21 @@
+---
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: bond0-vlan2
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: master-0
+    node-role.kubernetes.io/master: ""
+  desiredState:
+    interfaces:
+      - name: bond0.2
+        description: vlan using bond0
+        type: vlan
+        state: up
+        vlan:
+          base-iface: bond0
+          id: 2
+        ipv4:
+          dhcp: false
+          enabled: false

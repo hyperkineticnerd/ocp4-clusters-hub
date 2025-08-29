@@ -1,0 +1,14 @@
+ingress:
+  annotations:
+    kubernetes.io/ingress.class: openshift-default
+    route.openshift.io/termination: edge
+    cert-manager.io/cluster-issuer: letsencrypt
+    cert-manager.io/private-key-rotation-policy: always
+  hosts:
+  - netdata.apps.hub.ocp4.hkn.lab
+  spec:
+    ingressClassName: openshift-default
+  tls: []
+    # - secretName: netdata-tls
+    #   hosts:
+    #     - netdata.apps.hub.ocp4.hkn.lab

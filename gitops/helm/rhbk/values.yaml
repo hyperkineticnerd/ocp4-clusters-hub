@@ -1,0 +1,77 @@
+
+operator:
+  enable: false
+  channel: stable-v26.0
+  installPlanApproval: Automatic
+  name: rhbk-operator
+  namespace: keycloak
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  additionalNamespaces:
+   - keycloak
+
+keycloakSpec:
+  instances: 1
+  db:
+    vendor: postgres
+    host: 172.16.100.10
+    port: 5433
+    database: keycloak
+    passwordSecret:
+      name: keycloak-db-secret
+      key: POSTGRES_PASSWORD
+    usernameSecret:
+      name: keycloak-db-secret
+      key: POSTGRES_USERNAME
+  hostname: 
+    # admin: keycloak.hknlab.io
+    adminUrl: https://keycloak.hknlab.io
+    hostname: keycloak.hknlab.io
+  http:
+    httpEnabled: true
+    tlsSecret: keycloak-tls
+  ingress:
+    className: openshift-default
+    # annotations:
+    #   cert-manager.io/cluster-issuer: letsencrypt
+    #   external-dns.alpha.kubernetes.io/hostname: keycloak.hknlab.io
+    #   external-dns.alpha.kubernetes.io/target: dyn4.hknlab.io
+    #   route.openshift.io/termination: reencrypt
+    enabled: true
+
+
+####
+  # instances: 1
+  # db:
+  #   vendor: postgres
+  #   host: 172.16.100.10
+  #   port: 5433
+  #   database: keycloak
+  #   passwordSecret:
+  #     name: keycloak-db-secret
+  #     key: POSTGRES_PASSWORD
+  #   usernameSecret:
+  #     name: keycloak-db-secret
+  #     key: POSTGRES_USERNAME
+  # hostname: 
+  #   # admin: keycloak.hknlab.io
+  #   adminUrl: https://keycloak.hknlab.io
+  #   hostname: keycloak.hknlab.io
+  # http:
+  #   httpEnabled: true
+  #   # tlsSecret: keycloak-tls
+  # ingress:
+  #   className: openshift-default
+  #   annotations:
+  #     route.openshift.io/termination: reencrypt
+  #     cert-manager.io/cluster-issuer: letsencrypt
+  #     external-dns.alpha.kubernetes.io/hostname: keycloak.hknlab.io
+  #     external-dns.alpha.kubernetes.io/target: dyn4.hknlab.io
+  #   enabled: false
+  # # unsupported:
+  # #   podTemplate:
+  # #     spec:
+  # #       containers:
+  # #         - name: keycloak
+  # #           args:
+  # #             - start

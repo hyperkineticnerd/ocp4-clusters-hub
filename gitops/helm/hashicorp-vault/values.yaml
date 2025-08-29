@@ -1,0 +1,45 @@
+global:
+  openshift: true
+injector:
+  image:
+    repository: "registry.connect.redhat.com/hashicorp/vault-k8s"
+    tag: "1.6.1-ubi"
+  agentImage:
+    repository: "registry.connect.redhat.com/hashicorp/vault"
+    tag: "1.18.3-ubi"
+  webhook:
+    timeoutSeconds: 10
+server:
+  image:
+    repository: "registry.connect.redhat.com/hashicorp/vault"
+    tag: "1.18.3-ubi"
+  route:
+    enabled: true
+    activeService: false
+    host: vault-vault.apps.hub.ocp4.hkn.lab
+    tls:
+      termination: edge
+  ha:
+    enabled: true
+    replicas: 1
+    config: |
+      ui = true
+      listener "tcp" {
+        tls_disable = 1
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+      }
+      storage "s3" {
+        bucket     = "hashicorp-vault"
+        endpoint   = "minio2.storage.hkn.lab:9000"
+        region     = "us-mountain-1"
+        access_key = "zMFLrwdDQaVlGbqX"
+        secret_key = "PcqvRmpxp5DNFVvCirUyTR9Tk1nRjgAE"
+        s3_force_path_style = "true"
+        disable_ssl = "true"
+      }
+    raft:
+      enabled: false
+      replicas: 1
+ui:
+  enabled: true

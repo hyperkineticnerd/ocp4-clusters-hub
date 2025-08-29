@@ -1,0 +1,7 @@
+---
+apiVersion: config.openshift.io/v1
+kind: Network
+metadata:
+  name: cluster
+spec:
+  serviceNodePortRange: 2048-32767

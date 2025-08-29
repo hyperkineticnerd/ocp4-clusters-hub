@@ -1,0 +1,35 @@
+operator:
+  name: trident-operator
+  install:
+    installPlanApproval: Automatic
+  catalog:
+    channel: stable
+    source: community-operators
+    sourceNamespace: openshift-marketplace
+  operatorGroup:
+    enable: false
+    namespace: openshift-operators
+    additionalNamespaces: # []
+      - openshift-operators
+
+tridentBackendConfigs:
+  - name: backend-tbc-ontap-nas
+    spec:
+      credentials:
+        name: backend-tbc-ontap-nas-secret
+      dataLIF: 172.16.105.1
+      managementLIF: 172.16.104.1
+      nasType: nfs
+      storageDriverName: ontap-nas
+      svm: nfs_svm
+      version: 1
+
+  - name: backend-tbc-ontap-san
+    spec:
+      credentials:
+        name: backend-tbc-ontap-san-secret
+      managementLIF: 172.16.104.1
+      sanType: iscsi
+      storageDriverName: ontap-san
+      svm: iscsi_svm
+      version: 1

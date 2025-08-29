@@ -1,0 +1,69 @@
+mastodon:
+  singleUserMode: true
+  createAdmin:
+    enabled: true
+    username: hyperkineticnerd
+    email: hyperkineticnerd@hknlab.io
+  local_domain: hknlab.io
+  web_domain: mastodon.hknlab.io
+  s3:
+    enabled: true
+    access_key: "qHMfAIo0g2BzGRpZ"
+    access_secret: "SaMFfoBM03pVPFJqiSLtOpAX0JDmPO56"
+    bucket: "mastodon"
+    endpoint: "http://minio.storage.hkn.lab:9000"
+    hostname: "minio.storage.hkn.lab"
+    region: "us-mountain-1"
+  secrets:
+    secret_key_base: "b8850da690408c4f09364c090020b3c6381874c222dc9de5a7d2babe8b0d80c5b1f52fe529a46bf4d154aed745a7fe27ab5f4c76ec4fd16b59d107d6f4d3fb93"
+    otp_secret: "dce5c4ef3c087abfd72cc96fe36bad6cb9b27dacb51ae7c969c839fb4acf84f40cc83e81de38cf96a7b985587da22d353746b37af0099346560b288e3f6f9a2a"
+    vapid:
+      private_key: "XQOD5DwHDM5ccpLlnH3TGotNB5kgvUpoDxB64tKRlak="
+      public_key: "BLCU9HwQXI-uZF8OcusaO8IWLEb0W3z3HCOCFfVgbgulzgKWyxwgvji6ADf9auQjaE9JjkSAKByhODQlScGCi5o="
+  smtp:
+    auth_method: plain
+    delivery_method: smtp
+    enable_starttls: 'auto'
+    from_address: 
+    port: 1025
+    server: 
+    tls: true
+    login: 
+    password: 
+elasticsearch:
+  enabled: false
+postgresql:
+  enabled: true
+  postgresqlHostname: mastodon-postgresql-hl.mastodon.svc
+  postgresqlPort: 5432
+  auth:
+    database: mastodon_production
+    username: mastodon
+    password: CHANGEME
+redis:
+  enabled: true
+  hostname: mastodon-redis-headless.mastodon.svc
+  port: 6379
+  password: CHANGEME
+ingress:
+  annotations:
+    route.openshift.io/termination: edge
+    cert-manager.io/cluster-issuer: letsencrypt
+    cert-manager.io/private-key-rotation-policy: always
+    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  hosts:
+    - host: mastodon.hknlab.io
+      paths:
+        - path: '/'
+  tls:
+    - secretName: mastodon-tls
+      hosts:
+        - mastodon.hknlab.io
+podSecurityContext:
+  runAsUser: 0
+  runAsGroup: 0
+  fsGroup: 0
+jobAnnotations:
+  argocd.argoproj.io/sync-wave: "2"
+

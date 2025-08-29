@@ -1,0 +1,35 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: bitwarden
+#   namespace: openshift-gitops
+# spec:
+#   project: default
+
+#   syncPolicy:
+#     automated:
+#       prune: false
+#     syncOptions:
+#     - CreateNamespace=true
+
+#   destination:
+#     server: https://kubernetes.default.svc
+#     namespace: bitwarden
+
+#   sources:
+#   # - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/charts/mastodon.git
+#   - repoURL: https://charts.bitwarden.com/
+#     chart: self-host
+#     targetRevision: 2024.12.1
+#     helm:
+#       releaseName: bitwarden
+#       valueFiles:
+#         - $values/gitops/helm/bitwarden/values.yaml
+
+#   - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+#     targetRevision: HEAD
+#     ref: values
+
+#   - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+#     targetRevision: HEAD
+#     path: gitops/helm/bitwarden/extras

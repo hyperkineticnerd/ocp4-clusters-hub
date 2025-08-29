@@ -1,0 +1,59 @@
+image:
+  tag: stable-fpm
+nextcloud:
+  host: nextcloud.apps.hub.ocp4.hkn.lab
+  username: hyperkineticnerd
+  password: CHANGEME
+  configs:
+    k8s.config.php: |-
+      <?php
+        $CONFIG = array (
+          'check_data_directory_permissions' => false,
+          'trusted_proxies' => array('router-default.apps.hub.ocp4.hkn.lab'),
+          'overwriteprotocol' => 'https',
+        );
+    s3.config.php: |-
+      <?php
+      $CONFIG = array (
+        'objectstore' => array(
+          'class' => '\\OC\\Files\\ObjectStore\\S3',
+          'arguments' => array(
+            'bucket'         => 'nextcloud',
+            'autocreate'     => true,
+            'key'            => 'xs9T6LcTYwxBBr1U',
+            'secret'         => 'o6dL5olp1nLcyoSDcI8tWi2bePYvYl7l',
+            'hostname'       => 'minio.storage.hkn.lab',
+            'port'           => 9000,
+            'region'         => 'us-mountain-1',
+            'use_ssl'        => false,
+            'use_path_style' => true,
+          )
+        )
+      );
+
+  extraEnv:
+  - name: NEXTCLOUD_HOSTNAME
+    value: nextcloud.apps.hub.ocp4.hkn.lab
+  securityContext:
+    allowPrivilegeEscalation: true
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
+  podSecurityContext:
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
+    fsGroup: 0
+nginx:
+  enabled: true
+  securityContext:
+    allowPrivilegeEscalation: true
+    runAsNonRoot: false
+    runAsUser: 0
+    runAsGroup: 0
+ingress:
+  enabled: true
+  annotations:
+    route.openshift.io/termination: edge
+rbac:
+  enabled: true

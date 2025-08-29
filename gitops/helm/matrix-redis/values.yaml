@@ -1,0 +1,21 @@
+global:
+  storageClass: "basic"
+
+auth:
+  password: CHANGEME
+
+master:
+  # resources: 
+  resourcesPreset: "nano"
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+
+replica:
+  # resources:
+  resourcesPreset: "nano"
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false

@@ -1,0 +1,15 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: storage-vlan
+spec:
+  config: |- 
+    {
+      "name": "storage-vlan",
+      "type": "macvlan",
+      "master": "bond0.100",
+      "linkInContainer": false,
+      "ipam": {
+        "type": "dhcp"
+      }
+    }

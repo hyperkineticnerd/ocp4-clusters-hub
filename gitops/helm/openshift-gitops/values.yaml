@@ -1,0 +1,31 @@
+enableSpec: True
+
+argoSpec:
+  ## https://argocd-operator.readthedocs.io/en/latest/reference/argocd/#initial-repositories
+  initialRepositories: |
+    - url: https://github.com/argoproj/my-private-repository
+      passwordSecret:
+        name: my-secret
+        key: password
+      usernameSecret:
+        name: my-secret
+        key: username
+      sshPrivateKeySecret:
+        name: my-secret
+        key: sshPrivateKey
+    - type: helm
+      url: https://my-private-chart-repo.internal
+      name: private-repo
+      usernameSecret:
+        name: my-secret
+        key: username
+      passwordSecret:
+        name: my-secret
+        key: password
+    - type: git
+      url: https://github.com/argoproj/argocd-example-apps.git
+  tls:
+    ca: {}
+    initialCerts: |
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----

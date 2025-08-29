@@ -1,0 +1,5 @@
+# Helm Charts
+Chart.lock
+**/charts/*.tgz
+
+# Ansible

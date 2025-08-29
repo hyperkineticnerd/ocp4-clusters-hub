@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarr
+  namespace: openshift-gitops
+spec:
+  project: default
+
+  syncPolicy:
+    automated:
+      prune: false
+    syncOptions:
+    - CreateNamespace=true
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: servarr
+
+  sources:
+  - repoURL: https://charts.hknlab.io
+    chart: sonarr
+    targetRevision: 0.1.0
+    helm:
+      releaseName: sonarr
+      valueFiles:
+        - $values/gitops/helm/sonarr/values.yaml
+
+  - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+    targetRevision: HEAD
+    ref: values

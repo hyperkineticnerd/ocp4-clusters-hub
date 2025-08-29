@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-subnautica
+  labels:
+    fstype: nfs
+    app: game
+    game: subnautica
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 172.16.100.10
+    path: /volume1/docker/volumes/subnautica/subnautica
+  persistentVolumeReclaimPolicy: Retain
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-nitrox
+  labels:
+    fstype: nfs
+    app: game
+    game: subnautica
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 172.16.100.10
+    path: /volume1/docker/volumes/subnautica/nitrox
+  persistentVolumeReclaimPolicy: Retain
+

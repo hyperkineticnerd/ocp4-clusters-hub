@@ -1,0 +1,74 @@
+serverName: hknlab.io
+publicServerName: matrix.hknlab.io
+wellknown:
+  enabled: false
+postgresql:
+  enabled: false
+signingkey:
+  existingSecret: matrix-synapse-signingkey
+  job:
+    enabled: false
+    annotations:
+      argocd.argoproj.io/hook: PreSync
+      argocd.argoproj.io/hook-delete-policy: HookSucceeded
+externalPostgresql:
+  host: 172.16.100.10
+  port: 5433
+  password: CHANGEME
+redis:
+  enabled: false
+externalRedis:
+  host: redis-master.matrix-synapse.svc
+  port: 6379
+  password: CHANGEME
+ingress:
+  enabled: true
+  className: openshift-default
+  includeUnderscoreSynapse: false
+  includeUnderscoreMatrix: false
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    # cert-manager.io/private-key-rotation-policy: always
+    route.openshift.io/termination: edge
+    external-dns.alpha.kubernetes.io/target: dyn4.hknlab.io
+    external-dns.aplha.kubernetes.io/hostname: matrix.hknlab.io
+  tls:
+    - secretName: matrix-tls
+      hosts:
+      - hknlab.io
+      - matrix.hknlab.io
+    # - secretName: hknrd-tls
+    #   hosts:
+  paths:
+    - path: /
+      pathType: Prefix
+      backend:
+        service:
+          name: matrix-synapse
+          port:
+            number: 8008
+  csPaths:
+    - path: /
+      pathType: Prefix
+      backend:
+        service:
+          name: matrix-synapse
+          port:
+            number: 8008
+config:
+  registrationSharedSecret: dancingbetweenthefibersoftime
+extraSecrets:
+  oidc_providers:
+    - idp_id: keycloak
+      idp_name: "KeyCloak"
+      issuer: "https://keycloak.hknlab.io/realms/external"
+      client_id: "synapse"
+      client_secret: "PXBALamKO7v5MizIXUkpFbEyv2pspazf"
+      scopes: ["openid", "profile"]
+      user_mapping_provider:
+        config:
+          localpart_template: "{{ user.preferred_username }}"
+          display_name_template: "{{ user.name }}"
+# extraConfig:
+#   old_signing_keys:
+#     "ed25519:id": { key: "", expired_ts: 123456789123 }

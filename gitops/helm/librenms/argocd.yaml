@@ -1,0 +1,84 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: librenms
+  namespace: openshift-gitops
+spec:
+  project: default
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: librenms
+
+  sources:
+    - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+      targetRevision: HEAD
+      path: gitops/helm/librenms/extras
+
+    - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+      targetRevision: HEAD
+      ref: values
+
+    - repoURL: https://g-research.github.io/charts/
+      chart: librenms
+      targetRevision: 0.1.1
+      helm:
+        releaseName: librenms
+        valueFiles:
+          - $values/gitops/helm/librenms/values.yaml
+
+    - repoURL: https://charts.bitnami.com/bitnami
+      chart: memcached
+      targetRevision: 6.3.2
+      helm:
+        releaseName: memcached
+        valuesFiles:
+          - $values/gitops/helm/librenms/values-memcached.yaml
+
+    - repoURL: https://charts.bitnami.com/bitnami
+      chart: mysql
+      targetRevision: 9.4.5
+      helm:
+        releaseName: mysql
+        valuesFiles:
+          - $values/gitops/helm/librenms/values-mysql.yaml
+
+    - repoURL: https://charts.bitnami.com/bitnami
+      chart: redis
+      targetRevision: 17.3.16
+      helm:
+        releaseName: redis
+        valuesFiles:
+          - $values/gitops/helm/librenms/values-redis.yaml
+
+    - repoURL: https://g-research.github.io/charts/
+      chart: rrdcached
+      targetRevision: 0.1.1
+      helm:
+        releaseName: rrdcached
+        valuesFiles:
+          - $values/gitops/helm/librenms/values-rrdcached.yaml
+
+  syncPolicy:
+    automated:
+      prune: false
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
+
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+      - /spec/replicas
+    - group: "*"
+      kind: "*"
+      managedFieldsManagers:
+      - kube-controller-manager

@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-palworld
+spec:
+  capacity:
+    storage: 30Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 172.16.100.10
+    path: /volume1/games/palworld
+  persistentVolumeReclaimPolicy: Retain

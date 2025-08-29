@@ -1,0 +1,23 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: helm-mastodon-scc
+  namespace: mastodon
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:openshift:scc:privileged
+subjects:
+- kind: ServiceAccount
+  name: mastodon
+  namespace: mastodon
+- kind: ServiceAccount
+  name: mastodon-postgresql
+  namespace: mastodon
+- kind: ServiceAccount
+  name: mastodon-redis-master
+  namespace: mastodon
+- kind: ServiceAccount
+  name: mastodon-redis-replica
+  namespace: mastodon

@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-satisfactory-backups
+  labels:
+    fstype: nfs
+spec:
+  capacity:
+    storage: 30Ti
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    path: /volume1/games/satisfactory/backups
+    server: 172.16.100.10
+  persistentVolumeReclaimPolicy: Retain
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-satisfactory-gamefiles
+  labels:
+    fstype: nfs
+spec:
+  capacity:
+    storage: 30Ti
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    path: /volume1/games/satisfactory/gamefiles
+    server: 172.16.100.10
+  persistentVolumeReclaimPolicy: Retain
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-satisfactory-logs
+  labels:
+    fstype: nfs
+spec:
+  capacity:
+    storage: 30Ti
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    path: /volume1/games/satisfactory/logs
+    server: 172.16.100.10
+  persistentVolumeReclaimPolicy: Retain
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-satisfactory-saved
+  labels:
+    fstype: nfs
+spec:
+  capacity:
+    storage: 30Ti
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    path: /volume1/games/satisfactory/saved
+    server: 172.16.100.10
+  persistentVolumeReclaimPolicy: Retain

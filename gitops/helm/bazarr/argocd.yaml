@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bazarr
+  namespace: openshift-gitops
+spec:
+  project: default
+
+  syncPolicy:
+    automated:
+      prune: false
+    syncOptions:
+    - CreateNamespace=true
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: servarr
+
+  sources:
+  - repoURL: https://charts.hknlab.io
+    chart: bazarr
+    targetRevision: 0.1.0
+    helm:
+      releaseName: bazarr
+      valueFiles:
+        - $values/gitops/helm/bazarr/values.yaml
+
+  - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+    targetRevision: HEAD
+    ref: values

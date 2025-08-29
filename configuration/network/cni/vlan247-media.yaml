@@ -1,0 +1,15 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: media-vlan
+spec:
+  config: |- 
+    {
+      "name": "media-vlan",
+      "type": "macvlan",
+      "master": "bond0.247",
+      "linkInContainer": false,
+      "ipam": {
+        "type": "dhcp"
+      }
+    }

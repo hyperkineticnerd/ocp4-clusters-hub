@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudflare-tunnel
+  namespace: openshift-gitops
+spec:
+  project: default
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cloudflare-tunnel-ingress-controller
+
+  sources:
+  - repoURL: https://helm.strrl.dev
+    chart: cloudflare-tunnel-ingress-controller
+    targetRevision: 0.0.18
+    helm:
+      releaseName: cloudflare-tunnel-ingress-controller
+      valueFiles:
+        - $values/gitops/helm/cloudflare-tunnel-ingress-controller/values.yaml
+
+  - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+    targetRevision: HEAD
+    ref: values
+
+  # - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+  #   targetRevision: HEAD
+  #   path: gitops/helm/cloudflare-tunnel-ingress-controller/extras

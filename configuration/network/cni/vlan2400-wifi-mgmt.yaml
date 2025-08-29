@@ -1,0 +1,15 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: wifi-mgmt-vlan
+spec:
+  config: |- 
+    {
+      "name": "wifi-mgmt-vlan",
+      "type": "macvlan",
+      "master": "bond0.2400",
+      "linkInContainer": false,
+      "ipam": {
+        "type": "static"
+      }
+    }

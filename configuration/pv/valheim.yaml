@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-valheim-data
+  labels:
+    fstype: nfs
+    app: game
+    game: valheim
+spec:
+  capacity:
+    storage: 30Ti
+  accessModes:
+  - ReadWriteMany
+  - ReadWriteOnce
+  nfs:
+    path: /volume1/games/valheim/data
+    server: 172.16.100.10
+  persistentVolumeReclaimPolicy: Retain
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-valheim-config
+  labels:
+    fstype: nfs
+    app: game
+    game: valheim
+spec:
+  capacity:
+    storage: 30Ti
+  accessModes:
+  - ReadWriteMany
+  - ReadWriteOnce
+  nfs:
+    path: /volume1/games/valheim/config
+    server: 172.16.100.10
+  persistentVolumeReclaimPolicy: Retain

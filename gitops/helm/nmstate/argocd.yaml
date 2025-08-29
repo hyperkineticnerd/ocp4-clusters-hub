@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nmstate
+  namespace: openshift-gitops
+spec:
+  project: default
+
+  syncPolicy:
+    automated:
+      prune: false
+    syncOptions:
+    - CreateNamespace=true
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: openshift-nmstate
+
+  sources:
+  - repoURL: https://charts.hknlab.io
+    chart: nmstate
+    targetRevision: 0.1.0
+    helm:
+      releaseName: nmstate
+      valueFiles:
+        - $values/gitops/helm/nmstate/values.yaml
+
+  - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+    targetRevision: HEAD
+    ref: values
+
+  # - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+  #   targetRevision: HEAD
+  #   path: gitops/helm/nmstate/extras

@@ -1,0 +1,15 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: netapp-vlan
+spec:
+  config: |- 
+    {
+      "name": "netapp-vlan",
+      "type": "macvlan",
+      "master": "bond0.104",
+      "linkInContainer": false,
+      "ipam": {
+        "type": "dhcp"
+      }
+    }

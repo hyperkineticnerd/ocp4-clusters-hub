@@ -1,0 +1,14 @@
+apiVersion: trident.netapp.io/v1
+kind: TridentOrchestrator
+metadata:
+  name: trident
+spec:
+  imagePullSecrets: []
+  IPv6: false
+  enableNodePrep: false
+  debug: true
+  imageRegistry: ''
+  namespace: trident
+  k8sTimeout: 30
+  kubeletDir: /var/lib/kubelet
+  silenceAutosupport: true

@@ -1,0 +1,22 @@
+---
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: bond0
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: master-0
+    node-role.kubernetes.io/master: ""
+  desiredState:
+    interfaces:
+      - name: bond0
+        description: 40G Bond0 with ports enp59s0 and enp59s0d1
+        type: bond
+        state: up
+        ipv4:
+          enabled: false
+        link-aggregation:
+          mode: 802.3ad
+          port:
+            - enp59s0
+            - enp59s0d1

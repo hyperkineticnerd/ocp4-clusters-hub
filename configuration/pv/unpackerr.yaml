@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-unpackerr-downloads
+  labels:
+    fstype: nfs
+spec:
+  capacity:
+    storage: 30Ti
+  accessModes:
+  - ReadWriteMany
+  nfs:
+    path: /volume1/downloads/completed
+    server: 172.16.100.10
+  persistentVolumeReclaimPolicy: Retain

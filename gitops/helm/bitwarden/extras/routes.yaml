@@ -1,0 +1,210 @@
+---
+  kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: bitwarden-self-host-web
+    namespace: bitwarden
+    annotations:
+      haproxy.router.openshift.io/rewrite-target: /
+  spec:
+    host: bitwarden.apps.hub.ocp4.hkn.lab
+    path: "/"
+    to:
+      kind: Service
+      name: bitwarden-self-host-web
+      weight: 100
+    port:
+      targetPort: 5000
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+      # destinationCACertificate: ''
+---
+  kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: bitwarden-self-host-api
+    namespace: bitwarden
+    annotations:
+      haproxy.router.openshift.io/rewrite-target: /
+  spec:
+    host: bitwarden.apps.hub.ocp4.hkn.lab
+    path: "/api/"
+    to:
+      kind: Service
+      name: bitwarden-self-host-api
+      weight: 100
+    port:
+      targetPort: 5000
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+      # destinationCACertificate: ''
+---
+  kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: bitwarden-self-host-attachments
+    namespace: bitwarden
+    annotations:
+      haproxy.router.openshift.io/rewrite-target: /
+  spec:
+    host: bitwarden.apps.hub.ocp4.hkn.lab
+    path: "/attachments/"
+    to:
+      kind: Service
+      name: bitwarden-self-host-attachments
+      weight: 100
+    port:
+      targetPort: 5000
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+      # destinationCACertificate: ''
+---
+  kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: bitwarden-self-host-icons
+    namespace: bitwarden
+    annotations:
+      haproxy.router.openshift.io/rewrite-target: /
+  spec:
+    host: bitwarden.apps.hub.ocp4.hkn.lab
+    path: "/icons/"
+    to:
+      kind: Service
+      name: bitwarden-self-host-icons
+      weight: 100
+    port:
+      targetPort: 5000
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+      # destinationCACertificate: ''
+---
+  kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: bitwarden-self-host-notifications
+    namespace: bitwarden
+    annotations:
+      haproxy.router.openshift.io/rewrite-target: /
+  spec:
+    host: bitwarden.apps.hub.ocp4.hkn.lab
+    path: "/notifications/"
+    to:
+      kind: Service
+      name: bitwarden-self-host-notifications
+      weight: 100
+    port:
+      targetPort: 5000
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+      # destinationCACertificate: ''
+---
+  kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: bitwarden-self-host-events
+    namespace: bitwarden
+    annotations:
+      haproxy.router.openshift.io/rewrite-target: /
+  spec:
+    host: bitwarden.apps.hub.ocp4.hkn.lab
+    path: "/events/"
+    to:
+      kind: Service
+      name: bitwarden-self-host-events
+      weight: 100
+    port:
+      targetPort: 5000
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+      # destinationCACertificate: ''
+---
+  kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: bitwarden-self-host-scim
+    namespace: bitwarden
+    annotations:
+      haproxy.router.openshift.io/rewrite-target: /
+  spec:
+    host: bitwarden.apps.hub.ocp4.hkn.lab
+    path: "/scim/"
+    to:
+      kind: Service
+      name: bitwarden-self-host-scim
+      weight: 100
+    port:
+      targetPort: 5000
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+      # destinationCACertificate: ''
+---
+  kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: bitwarden-self-host-sso
+    namespace: bitwarden
+    annotations:
+      # Rewrite will not work with sso
+  spec:
+    host: bitwarden.apps.hub.ocp4.hkn.lab
+    path: "/sso/"
+    to:
+      kind: Service
+      name: bitwarden-self-host-sso
+      weight: 100
+    port:
+      targetPort: 5000
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+      # destinationCACertificate: ''
+---
+  kind: Route
+  apiVersion: route.openshift.io/v1
+  metadata:
+    name: bitwarden-self-host-identity
+    namespace: bitwarden
+    annotations:
+      # Rewrite will not work with identity
+  spec:
+    host: bitwarden.apps.hub.ocp4.hkn.lab
+    path: "/identity/"
+    to:
+      kind: Service
+      name: bitwarden-self-host-identity
+      weight: 100
+    port:
+      targetPort: 5000
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+      # destinationCACertificate: ''
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: bitwarden-self-host-admin
+  namespace: bitwarden
+  annotations:
+    # Rewrite will not work with admin
+spec:
+  host: bitwarden.apps.hub.ocp4.hkn.lab
+  path: "/admin"
+  to:
+    kind: Service
+    name: bitwarden-self-host-admin
+    weight: 100
+  port:
+    targetPort: 5000
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+    # destinationCACertificate: ''

@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: external-secrets
+  namespace: openshift-gitops
+spec:
+  project: default
+
+  syncPolicy:
+    automated:
+      prune: false
+    syncOptions:
+      - CreateNamespace=true
+      - RespectIgnoreDifferences=true
+      - ServerSideApply=true
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: external-secrets
+
+  sources:
+  - repoURL: https://charts.external-secrets.io
+    chart: external-secrets
+    targetRevision: 0.19.0
+    helm:
+      releaseName: external-secrets
+      # valueFiles:
+        # - $values/gitops/helm/external-secrets/values.yaml
+
+  # - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+  #   targetRevision: HEAD
+  #   ref: values
+
+  # - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+  #   targetRevision: HEAD
+  #   path: gitops/helm/external-dns/extras

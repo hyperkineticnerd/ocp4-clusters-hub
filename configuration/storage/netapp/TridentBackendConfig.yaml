@@ -1,0 +1,35 @@
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: backend-tbc-ontap-nas
+  namespace: trident
+spec:
+  version: 1
+  credentials:
+    name: backend-tbc-ontap-nas-secret
+  storageDriverName: ontap-nas
+  # backendName: tbc-ontap-nas-nfs-svm
+  managementLIF: 172.16.104.1
+  dataLIF: 172.16.105.1
+  svm: nfs_svm
+  nasType: nfs
+  # nfsMountOptions: ""
+
+---
+apiVersion: trident.netapp.io/v1
+kind: TridentBackendConfig
+metadata:
+  name: backend-tbc-ontap-san
+  namespace: trident
+spec:
+  version: 1
+  credentials:
+    name: backend-tbc-ontap-san-secret
+  storageDriverName: ontap-san
+  # backendName: tbc-ontap-san-iscsi-svm
+  managementLIF: 172.16.104.1
+  # dataLIF: 172.16.105.2
+  svm: iscsi_svm
+  sanType: iscsi
+  # formatOptions: ""

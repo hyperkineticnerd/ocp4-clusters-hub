@@ -1,0 +1,15 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: developer-vlan
+spec:
+  config: |- 
+    {
+      "name": "developer-vlan",
+      "type": "macvlan",
+      "master": "bond0.30",
+      "linkInContainer": false,
+      "ipam": {
+        "type": "dhcp"
+      }
+    }

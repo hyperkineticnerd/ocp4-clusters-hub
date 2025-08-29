@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: matrix-dendrite
+  namespace: openshift-gitops
+spec:
+  project: default
+
+  syncPolicy:
+    automated:
+      prune: false
+    syncOptions:
+    - CreateNamespace=true
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: matrix-dendrite
+
+  sources:
+  - repoURL: https://charts.hknlab.io
+    chart: matrix-dendrite
+    targetRevision: 0.1.0
+    helm:
+      releaseName: matrix-dendrite
+      valueFiles:
+        - $values/gitops/helm/matrix-dendrite/values.yaml
+
+  # - repoURL: https://matrix-org.github.io/dendrite/
+  #   chart: dendrite
+  #   targetRevision: 0.14.6
+  #   helm:
+  #     releaseName: matrix-dendrite
+  #     valueFiles:
+  #       - $values/gitops/helm/valuefiles/matrix-dendrite.yaml
+
+  - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+    targetRevision: HEAD
+    ref: values
+
+  # - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+  #   targetRevision: HEAD
+  #   path: gitops/helm/matrix-dendrite/extras
+
+  ignoreDifferences:
+    - group: Batch
+      kind: Job

@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: helm-charts
+spec:
+  generators:
+  - list:
+      elements:
+      - name: hashicorp-vault
+        namespace: vault
+        repo: https://helm.releases.hashicorp.com
+        chart: vault
+        version: 0.23.0
+        releaseName: vault
+        valueFile: $values/gitops/helm/valuefiles/hashicorp-vault.yaml
+      - name: matrix-redis
+        namespace: matrix-synapse
+        repo: https://charts.bitnami.com/bitnami
+        chart: redis
+        version: 17.3.7
+        releaseName: redis
+        valueFile: $values/gitops/helm/valuefiles/matrix-redis.yaml
+      - name: matrix-synapse
+        namespace: matrix-synapse
+        repo: https://gitlab.com/ananace/charts.git
+        chart: charts/matrix-synapse
+        version: HEAD
+        releaseName: matrix-synapse
+        valueFile: $values/gitops/helm/valuefiles/matrix-redis.yaml
+      - name: netbox-redis
+        namespace: netbox
+        repo: https://charts.bitnami.com/bitnami
+        chart: redis
+        version: 17.3.7
+        releaseName: redis
+        valueFile: $values/gitops/helm/valuefiles/netbox-redis.yaml
+  template:
+    metadata:
+      name: '{{name}}'
+      namespace: openshift-gitops
+    spec:
+      project: default
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      sources:
+      - repoURL: '{{repo}}'
+        chart: '{{chart}}'
+        targetRevision: '{{version}}'
+        helm:
+          releaseName: '{{releaseName}}'
+          valueFiles:
+            - '{{valueFile}}'
+      - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
+        targetRevision: HEAD
+        ref: values

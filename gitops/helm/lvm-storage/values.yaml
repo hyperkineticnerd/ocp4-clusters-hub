@@ -1,0 +1,21 @@
+operator:
+  channel: stable-4.18
+  installPlanApproval: Automatic
+  name: lvms-operator
+  namespace: openshift-storage
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  additionalNamespaces: # []
+    - openshift-storage
+
+deviceClasses:
+  - name: vg1
+    thinPoolConfig:
+      name: thin-pool-1
+      overprovisionRatio: 10
+      sizePercent: 90
+    deviceSelector:
+      paths:
+      # - /dev/disk/by-id/scsi-SDELL_PERC_H730_Mini_00d4601e4dc2a1bc2c0086525ba06d86 # R730
+      # - /dev/disk/by-id/scsi-SDELL_PERC_H730P_Adp_00ae99f206f94dd12c0086525ba06d86 # R740
+      - /dev/sdb

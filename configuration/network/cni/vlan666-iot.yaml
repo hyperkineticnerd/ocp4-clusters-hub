@@ -1,0 +1,15 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: iot-vlan
+spec:
+  config: |- 
+    {
+      "name": "iot-vlan",
+      "type": "macvlan",
+      "master": "bond0.666",
+      "linkInContainer": false,
+      "ipam": {
+        "type": "dhcp"
+      }
+    }

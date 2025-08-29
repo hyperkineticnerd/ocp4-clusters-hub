@@ -1,0 +1,15 @@
+global:
+  storageClass: "basic"
+
+auth:
+  password: CHANGEME
+master:
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false
+replica:
+  podSecurityContext:
+    enabled: false
+  containerSecurityContext:
+    enabled: false

@@ -16,7 +16,8 @@ postgresql:
 valkey:
   enabled: true
   auth:
-    password: "CHANGEME"
+    existingSecret: "netbox-valkey"
+    existingSecretPasswordKey: "valkey-password"
 
 imagePullSecrets: []
 nameOverride: ""

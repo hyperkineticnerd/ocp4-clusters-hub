@@ -1,9 +1,9 @@
 serverName: hknlab.io
 publicServerName: matrix.hknlab.io
+
 wellknown:
   enabled: false
-postgresql:
-  enabled: false
+
 signingkey:
   existingSecret: matrix-synapse-signingkey
   job:
@@ -11,16 +11,7 @@ signingkey:
     annotations:
       argocd.argoproj.io/hook: PreSync
       argocd.argoproj.io/hook-delete-policy: HookSucceeded
-externalPostgresql:
-  host: 172.16.100.10
-  port: 5433
-  password: CHANGEME
-redis:
-  enabled: false
-externalRedis:
-  host: redis-master.matrix-synapse.svc
-  port: 6379
-  password: CHANGEME
+
 ingress:
   enabled: true
   className: openshift-default
@@ -55,8 +46,26 @@ ingress:
           name: matrix-synapse
           port:
             number: 8008
+
+postgresql:
+  enabled: false
+externalPostgresql:
+  host: 172.16.100.10
+  port: 5433
+  existingSecret: postgres-secrets
+  existingSecretPasswordKey: postgres-password
+
+redis:
+  enabled: false
+externalRedis:
+  host: redis-master.matrix-synapse.svc
+  port: 6379
+  existingSecret: redis-secrets
+  existingSecretPasswordKey: redis-password
+
 config:
   registrationSharedSecret: dancingbetweenthefibersoftime
+
 extraSecrets:
   oidc_providers:
     - idp_id: keycloak
@@ -69,6 +78,7 @@ extraSecrets:
         config:
           localpart_template: "{{ user.preferred_username }}"
           display_name_template: "{{ user.name }}"
+
 # extraConfig:
 #   old_signing_keys:
 #     "ed25519:id": { key: "", expired_ts: 123456789123 }

@@ -2,7 +2,8 @@ global:
   storageClass: "basic"
 
 auth:
-  password: CHANGEME
+  existingSecret: "redis"
+  existingSecretPasswordKey: "redis-password"
 
 master:
   # resources: 

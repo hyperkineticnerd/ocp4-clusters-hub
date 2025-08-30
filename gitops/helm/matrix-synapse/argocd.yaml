@@ -4,13 +4,17 @@ metadata:
   name: matrix-synapse
   namespace: openshift-gitops
 spec:
-  project: default
-
   syncPolicy:
     automated:
       prune: false
     syncOptions:
     - CreateNamespace=true
+
+  ignoreDifferences:
+    - group: Batch
+      kind: Job
+
+  project: default
 
   destination:
     server: https://kubernetes.default.svc
@@ -32,7 +36,3 @@ spec:
   - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
     targetRevision: HEAD
     path: gitops/helm/matrix-synapse/extras
-
-  ignoreDifferences:
-    - group: Batch
-      kind: Job

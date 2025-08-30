@@ -4,13 +4,17 @@ metadata:
   name: netbox
   namespace: openshift-gitops
 spec:
-  project: default
-
   syncPolicy:
     automated:
       prune: false
     syncOptions:
     - CreateNamespace=true
+
+  ignoreDifferences:
+    - group: Batch
+      kind: Job
+
+  project: default
 
   destination:
     server: https://kubernetes.default.svc
@@ -33,6 +37,3 @@ spec:
     targetRevision: HEAD
     path: gitops/helm/netbox/extras
 
-  ignoreDifferences:
-    - group: Batch
-      kind: Job

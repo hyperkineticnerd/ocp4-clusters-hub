@@ -2,12 +2,15 @@ global:
   storageClass: "basic"
 
 auth:
-  password: CHANGEME
+  existingSecret: "netbox-valkey"
+  existingSecretPasswordKey: "valkey-password"
+
 master:
   podSecurityContext:
     enabled: false
   containerSecurityContext:
     enabled: false
+
 replica:
   podSecurityContext:
     enabled: false

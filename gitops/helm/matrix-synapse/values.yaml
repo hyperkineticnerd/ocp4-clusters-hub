@@ -52,7 +52,7 @@ postgresql:
 externalPostgresql:
   host: 172.16.100.10
   port: 5433
-  existingSecret: postgres-secrets
+  existingSecret: matrix-synapse-external-secrets
   existingSecretPasswordKey: postgres-password
 
 redis:
@@ -60,7 +60,7 @@ redis:
 externalRedis:
   host: redis-master.matrix-synapse.svc
   port: 6379
-  existingSecret: redis-secrets
+  existingSecret: matrix-synapse-external-secrets
   existingSecretPasswordKey: redis-password
 
 config:

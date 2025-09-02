@@ -1,0 +1,47 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- helm/bazarr/argocd.yaml
+# - helm/bitwarden/argocd.yaml # disabled
+- helm/cert-manager/argocd.yaml
+# - helm/cloudflare-tunnel-ingress-controller/argocd.yaml
+- helm/configarr/argocd.yaml
+- helm/element-web/argocd.yaml
+- helm/external-dns/argocd.yaml
+# - helm/external-secrets/argocd.yaml
+- helm/hashicorp-vault/argocd.yaml
+# - helm/home-assistant/argocd.yaml
+# - helm/immich/argocd.yaml
+- helm/jellyfin/argocd.yaml
+- helm/jellyseerr/argocd.yaml
+# - helm/librenms/argocd.yaml
+- helm/lidarr/argocd.yaml
+- helm/mastodon/argocd.yaml
+- helm/matrix-dendrite/argocd.yaml
+- helm/matrix-redis/argocd.yaml
+- helm/matrix-synapse/argocd.yaml
+- helm/metube/argocd.yaml
+- helm/netbox/argocd.yaml
+- helm/netbox-redis/argocd.yaml
+- helm/nextcloud/argocd.yaml
+# - helm/nfs-subdir/argocd.yaml
+- helm/nmstate/argocd.yaml
+# - helm/nvidia/argocd.yaml
+# - helm/obico/argocd.yaml
+# - helm/omada/argocd.yaml
+# - helm/openshift-gitops/argocd.yaml
+- helm/prowlarr/argocd.yaml
+- helm/radarr/argocd.yaml
+- helm/readarr/argocd.yaml
+# - helm/redirecterr/argocd.yaml
+- helm/rhbk/argocd.yaml
+- helm/sabnzbd/argocd.yaml
+- helm/sonarr/argocd.yaml
+- helm/tdarr-node/argocd.yaml
+- helm/tdarr-server/argocd.yaml
+# - helm/trident/argocd.yaml
+# - helm/unifi/argocd.yaml
+# - helm/uptime-kuma/argocd.yaml
+# - helm/wizarr/argocd.yaml

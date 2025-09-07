@@ -2,7 +2,6 @@
 kind: ClusterIssuer
 metadata:
   name: letsencrypt
-  resourceVersion: '172088682'
 spec:
   acme:
     email: sean.nelson.04@gmail.com

@@ -21,10 +21,10 @@ spec:
     namespace: cert-manager
 
   sources:
-  - repoURL: quay.io/jetstack/charts/cert-manager
+  - repoURL: https://charts.jetstack.io # oci://quay.io/jetstack/charts/cert-manager
+    # path: .
+    chart: cert-manager
     targetRevision: v1.18.2
-    # chart: cert-manager
-    path: .
     helm:
       releaseName: cert-manager
       valuesObject:

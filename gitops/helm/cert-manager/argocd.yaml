@@ -21,68 +21,17 @@ spec:
     namespace: cert-manager
 
   sources:
-  # - repoURL: oci://quay.io/jetstack/charts/cert-manager
-  #   targetRevision: v1.18.2
-
-  - repoURL: https://charts.hknlab.io
-    chart: cert-manager
-    targetRevision: 0.1.2
+  - repoURL: quay.io/jetstack/charts/cert-manager
+    targetRevision: v1.18.2
+    # chart: cert-manager
+    path: .
     helm:
-      releaseName: letsencrypt
-      valueFiles:
-        - $values/gitops/helm/cert-manager/values.yaml
-
-  - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
-    targetRevision: HEAD
-    ref: values
+      releaseName: cert-manager
+      valuesObject:
+        crds:
+          enabled: true
 
   - repoURL: https://gitlab.developer.hkn.lab/infrastructure-as-code/openshift4/clusters/hub.git
     targetRevision: HEAD
     path: gitops/helm/cert-manager/extras
 
-  ignoreDifferences:
-  #   - kind: Service
-  #     namespace: cert-manager
-  #     jsonPointers:
-  #     #   - /metadata
-  #     #   - /spec
-  #     #   - /status
-  #       - /
-  #   - kind: ServiceAccount
-  #     namespace: cert-manager
-  #     jsonPointers:
-  #       - /metadata
-  #       - /spec
-  #       - /status
-  #       - /
-    # - kind: 
-    #   namespace: cert-manager
-    - group: "*"
-      kind: MutatingWebhookConfiguration
-    - group: "*"
-      kind: ValidatingWebhookConfiguration
-    - group: "*"
-      kind: CustomResourceDefinition
-    - group: "*"
-      kind: Deployment
-      namespace: cert-manager
-    - group: "*"
-      kind: Service
-      namespace: cert-manager
-    - group: "*"
-      kind: ServiceAccount
-      namespace: cert-manager
-    - group: "*"
-      kind: ValidatingWebhookConfiguration
-    - group: "*"
-      kind: MutatingWebhookConfiguration
-    - group: "*"
-      kind: ClusterRole
-    - group: "*"
-      kind: ClusterRoleBinding
-    - group: "*"
-      kind: Role
-      namespace: cert-manager
-    - group: "*"
-      kind: RoleBinding
-      namespace: cert-manager
